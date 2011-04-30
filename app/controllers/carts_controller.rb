@@ -3,7 +3,7 @@ class CartsController < ApplicationController
   # GET /carts.xml
   def index
     @carts = Cart.all
-
+    @cart = current_cart
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @carts }
@@ -82,7 +82,7 @@ class CartsController < ApplicationController
     session[:cart_id] = nil
 
     respond_to do |format|
-      format.html { redirect_to(store_url, :notice => 'Your cart is currently empty') }
+      format.html { redirect_to(store_url) }
       format.xml  { head :ok }
     end
   end
