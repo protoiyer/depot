@@ -61,10 +61,13 @@ class LineItemsController < ApplicationController
   # PUT /line_items/1.xml
   def update
     @line_item = LineItem.find(params[:id])
+    @cart = current_cart
+    @line_item = @cart.decrement_quantity(@line_item.id)
 
     respond_to do |format|
       if @line_item.update_attributes(params[:line_item])
-        format.html { redirect_to(@line_item, :notice => 'Line item was successfully updated.') }
+        format.html { redirect_to(store_url) }
+        format.js { @current_item = @line_item }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -84,4 +87,5 @@ class LineItemsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
 end

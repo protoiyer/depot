@@ -11,6 +11,8 @@ Depot::Application.routes.draw do
     get :who_bought, :on => :member
   end
 
+  put "line_items/decrement_quantity"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

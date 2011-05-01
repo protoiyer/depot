@@ -1,0 +1,4 @@
+page << "function removeCart() {"
+page.replace_html 'cart', nil
+page << "}"
+page[:cart].visual_effect :blind_up, 'cart', :duration => 1, :afterfinish => 'removeCart' 

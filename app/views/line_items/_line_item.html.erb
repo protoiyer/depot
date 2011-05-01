@@ -6,7 +6,14 @@
   <td><%= line_item.quantity %>&times; </td>
   <td><%= line_item.product.title %></td>
   <td class="item_price"><%= number_to_currency(line_item.total_price) %></td>
+  <td class="item_decrement">
+    <% if line_item.quantity > 1 %>
+      <%= button_to '-', line_item, :method => :put, :remote => true %>
+    <% else %>
+      <%= button_to '-', line_item, :method => :delete %>
+    <% end %>
+  </td>
   <td class="item_delete">
-    <%= button_to 'X', line_item, :method => :delete, :confirm => 'Are you sure?'%>
+    <%= button_to 'x', line_item, :method => :delete, :confirm => 'Are you sure?'%>
   </td>
 </tr>
