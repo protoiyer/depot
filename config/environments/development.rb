@@ -20,8 +20,8 @@ Depot::Application.configure do
   config.action_mailer.smtp_settings = {
     :address          => "smtp.gmail.com",
     :port             => 25,
-    :user_name        => "protoiyer",
-    :password         => 'protostatic12#',
+    :user_name        => "xxx",
+    :password         => 'yyy',
     :authentication   => :login,
     #:domain           => "gmail.com",
     #:enable_starttls_auto => true
