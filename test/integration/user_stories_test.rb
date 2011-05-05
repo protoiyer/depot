@@ -55,13 +55,31 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
     assert_equal "Pragmatic Store Order Shipped", mail.subject
   end
 
+  test "should redirect to login when non admin accesses admin areas" do
+    get "/carts/wibble"
+    assert_response :redirect
+    assert_redirected_to "/login"
+
+    get "/products"
+    assert_response :redirect
+    assert_redirected_to "/login"
+  end
+
   test "should mail the admin when error occurs" do
     get "/carts/wibble"
     assert_response :redirect
-    assert_template "/"
+    assert_redirected_to "/login"
 
+    post_via_redirect "/login", 
+      :login => { :name      => "dave",
+                  :password  => "secret" }
+                  
+    get "/carts/wibble"
+    assert_response :redirect
+    assert_template "/"
+    
     mail = ActionMailer::Base.deliveries.last
-    assert_equal ["protoiyer@gmail.com"], mail.to
+    assert_equal ["dave@example.com"], mail.to
     assert_equal "proto bhai <depot@example.com>", mail[:from].value
     assert_equal "Depot App Error Incident", mail.subject
   end
